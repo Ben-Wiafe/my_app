@@ -2,32 +2,16 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'home.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends StatelessWidget {
   const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  bool _passwordVisible = true;
-
-  void toggle(){
-    setState( () {
-      _passwordVisible = !_passwordVisible;}
-      );
-  }
-  @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
-    
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text('Sign Up'),
-      ),
-      body: SingleChildScrollView(
-        child: SafeArea(
+    bool password = true;
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: size * 0.13, vertical: size * 0.1),
@@ -52,11 +36,13 @@ class _SignUpState extends State<SignUp> {
                           color: Color.fromARGB(255, 10, 61, 103))),
                 ),
                 const Center(
-                  child: Text('Enter via Social Networks',
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500)),
+                  child: Text(
+                    'Enter via Social Networks',
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 const SizedBox(height: 40),
                 Row(
@@ -69,8 +55,8 @@ class _SignUpState extends State<SignUp> {
                       shadowColor: Colors.blue,
                       child: Padding(
                         padding: EdgeInsets.all(20.0),
-                        child: Icon(Icons.facebook,
-                            color: Colors.blue, size: 30.0),
+                        child:
+                            Icon(Icons.facebook, color: Colors.blue, size: 30.0),
                       ),
                     ),
                     SizedBox(width: 20),
@@ -81,8 +67,8 @@ class _SignUpState extends State<SignUp> {
                       shadowColor: Colors.blue,
                       child: Padding(
                         padding: EdgeInsets.all(20.0),
-                        child: Icon(Icons.favorite,
-                            color: Colors.blue, size: 30.0),
+                        child:
+                            Icon(Icons.favorite, color: Colors.blue, size: 30.0),
                       ),
                     ),
                   ],
@@ -104,7 +90,27 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 const SizedBox(height: 30),
-
+                PhysicalModel(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  elevation: 8.0,
+                  shadowColor: Colors.blue,
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(18.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.white, style: BorderStyle.none),
+                      ),
+                      border: InputBorder.none,
+                      // labelText:'Email',
+                      hintText: 'Full Name',
+                      hintStyle: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+        
                 PhysicalModel(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -125,29 +131,26 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 const SizedBox(height: 30),
-
+        
                 PhysicalModel(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   elevation: 12.0,
                   shadowColor: Colors.blue,
                   child: TextField(
-                    obscureText: _passwordVisible,
-                    decoration: InputDecoration(
-                      contentPadding:const EdgeInsets.all(18.0),
-                      enabledBorder: const OutlineInputBorder(
+                    obscureText: password,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(18.0),
+                      enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.white, style: BorderStyle.none),
                       ),
                       border: InputBorder.none,
                       // labelText:'Password',
-                      suffixIcon: GestureDetector(
-                        onTap: (){
-                          toggle();
-                        }
-                      ),
+                      suffixIcon: Icon(Icons.remove_red_eye,
+                          size: 17), //conditonal rendering
                       hintText: 'Enter password',
-                      hintStyle:const TextStyle(fontSize: 16),
+                      hintStyle: TextStyle(fontSize: 16),
                     ),
                   ),
                 ),
@@ -167,10 +170,8 @@ class _SignUpState extends State<SignUp> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Home()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const Home()));
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
@@ -182,43 +183,40 @@ class _SignUpState extends State<SignUp> {
                     child: const Text('Sign up'),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size * 0.01),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Flexible(
-                          child: Text(
-                            'You already have an account? ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                            ),
+                  padding: const EdgeInsets.symmetric(horizontal: 28),
+                  child:
+                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    const Text(
+                      'You already have an account? ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()))
+                      },
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Color.fromRGBO(
+                            33,
+                            150,
+                            243,
+                            1,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Login()))
-                          },
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Color.fromRGBO(
-                                33,
-                                150,
-                                243,
-                                1,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ]),
+                      ),
+                    ),
+                  ]),
                 )
               ],
             ),
